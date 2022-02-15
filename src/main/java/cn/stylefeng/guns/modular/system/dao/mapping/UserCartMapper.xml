@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.stylefeng.guns.modular.system.dao.UserCartMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.stylefeng.guns.modular.system.model.Cart">
+        <id column="id" property="id" />
+        <result column="goodid" property="goodid" />
+        <result column="userid" property="userid" />
+        <result column="collect" property="collect" />
+        <result column="cart" property="cart" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        goodid, userid, collect, cart
+    </sql>
+    <select id="findifnull" resultMap="BaseResultMap">
+        select * from user_cart where goodid=${goodid} and userid=${userid}
+    </select>
+    <insert id="insertData">
+        insert into user_cart(
+            <include refid="Base_Column_List"/>
+        ) values(${goodid},${userid},${collect},${cart})
+    </insert>
+    <update id="updateCollect">
+        UPDATE user_cart SET collect=${collect} WHERE goodid=${goodid} and userid=${userid}
+    </update>
+    <update id="updateCart">
+        UPDATE user_cart SET cart=${cart} WHERE goodid=${goodid} and userid=${userid}
+    </update>
+
+
+    <select id="findCollect" resultMap="BaseResultMap">
+        select * from user_cart where userid=${userid} and collect=1;
+    </select>
+    <select id="findCart" resultMap="BaseResultMap">
+        select * from user_cart where userid=${userid} and cart!=0;
+    </select>
+
+</mapper>

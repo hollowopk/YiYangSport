@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.stylefeng.guns.modular.system.dao.RecipeMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.stylefeng.guns.modular.system.model.Recipe">
+        <result column="recipe_name" property="name"/>
+        <result column="avatar" property="avatar"/>
+        <result column="energy" property="energy"/>
+        <result column="taste" property="taste"/>
+        <result column="cooking_method" property="cookingMethod"/>
+        <result column="difficulty" property="difficulty"/>
+        <result column="time" property="time"/>
+        <result column="protein" property="protein"/>
+        <result column="carbohydrate" property="carbohydrate"/>
+        <result column="steps" property="steps"/>
+        <result column="steps_pic" property="stepsPic"/>
+        <collection property="composition" resultMap="CompositionMap"/>
+    </resultMap>
+
+    <resultMap id="CompositionMap" type="java.util.Map">
+        <result property="foodName" column="food_name"/>
+        <result property="quantity" column="quantity"/>
+        <result property="category" column="category"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        recipe_name, energy
+    </sql>
+    <select id="findAll" resultMap="BaseResultMap">
+        select *
+        from recipe
+    </select>
+
+    <select id="findByName" resultMap="BaseResultMap">
+        select r.*, c.*
+        from recipe r, recipe_composition c
+        where r.recipe_name like CONCAT('%',#{name},'%') and r.recipe_id = c.recipe_id
+    </select>
+
+    <select id="findByMethod" resultMap="BaseResultMap">
+        select r.*, c.*
+        from recipe r, recipe_composition c
+        where r.cooking_method like CONCAT('%',#{method},'%') and r.recipe_id = c.recipe_id
+    </select>
+
+    <select id="findByTaste" resultMap="BaseResultMap">
+        select r.*, c.*
+        from recipe r, recipe_composition c
+        where r.taste like  CONCAT('%',#{taste},'%') and r.recipe_id = c.recipe_id
+    </select>
+
+</mapper>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.stylefeng.guns.modular.system.dao.FoodMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.stylefeng.guns.modular.system.model.Food">
+        <id column="name" property="name" />
+        <result column="category" property="category" />
+        <result column="energy" property="energy" />
+        <result column="protein" property="protein" />
+        <result column="fat" property="fat" />
+        <result column="carbohydrate" property="carbohydrate" />
+        <result column="fiber" property="fiber" />
+        <result column="vitaminA" property="vitaminA" />
+        <result column="vitaminC" property="vitaminC" />
+        <result column="vitaminE" property="vitaminE" />
+        <result column="carotene" property="carotene" />
+        <result column="vitaminB1" property="vitaminB1" />
+        <result column="vitaminB2" property="vitaminB2" />
+        <result column="niacin" property="niacin" />
+        <result column="cholesterol" property="cholesterol" />
+        <result column="Mg" property="Mg" />
+        <result column="Ca" property="Ca" />
+        <result column="Fe" property="Fe" />
+        <result column="Zn" property="Zn" />
+        <result column="Cu" property="Cu" />
+        <result column="Mn" property="Mn" />
+        <result column="K" property="k" />
+        <result column="P" property="p" />
+        <result column="Na" property="Na" />
+        <result column="Se" property="Se" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        category, name, energy, protein, fat, carbohydrate, fiber, vitaminA, vitaminC, vitaminE, carotene, vitaminB1, vitaminB2, niacin, cholesterol, Mg, Ca, Fe, Zn, Cu, Mn, K, P, Na, Se
+    </sql>
+    <select id="findAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from food
+    </select>
+
+    <select id="findByCategory" resultMap="BaseResultMap">
+        select
+        *
+        from food where category like  CONCAT('%',#{category},'%')
+    </select>
+
+    <select id="findByName" resultMap="BaseResultMap">
+        select
+            *
+        from food where name like  CONCAT('%',#{name},'%')
+    </select>
+
+    <select id="findByAsc" resultMap="BaseResultMap">
+        select
+        *
+        from food order by  ${select} asc
+    </select>
+
+    <select id="findByDesc" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from food order by ${select} desc
+    </select>
+
+</mapper>
